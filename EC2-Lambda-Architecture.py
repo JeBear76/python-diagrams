@@ -1,6 +1,6 @@
 from diagrams import Diagram, Edge, Cluster
 from diagrams.aws.compute import EC2Ami, Lambda
-from diagrams.aws.network import VPC, PrivateSubnet, Endpoint
+from diagrams.aws.network import Endpoint
 from diagrams.aws.management import Cloudwatch
 from diagrams.aws.storage import S3
 
