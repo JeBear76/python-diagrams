@@ -5,7 +5,7 @@ from diagrams.aws.management import Cloudwatch
 from diagrams.aws.storage import S3
 
 
-with Diagram("EC2-Lambda", show=False, direction="TB"):
+with Diagram("EC2-Lambda", show=False, direction="LR"):
     cloudWatch = Cloudwatch("CloudWatch")
     with Cluster("Amazon S3"):
         codeBucket = S3("Code bucket")
@@ -13,13 +13,14 @@ with Diagram("EC2-Lambda", show=False, direction="TB"):
         outputBucket = S3("Output bucket")
         buckets = [codeBucket, inputBucket, outputBucket]
 
-    with Cluster("AWS Lambda"):
-        triggerLambda = Lambda("Trigger Function")
-        shutdownLambda = Lambda("Cleanup Function")
-        lambdas = [triggerLambda, shutdownLambda]
+    
 
     with Cluster("ec2-lambda-vpc"):
         with Cluster("private-subnet"):
+            with Cluster("AWS Lambda"):
+                triggerLambda = Lambda("Trigger Function")
+                shutdownLambda = Lambda("Cleanup Function")
+                lambdas = [triggerLambda, shutdownLambda]
             s3Endpoint = Endpoint("S3 gateway endpoint")
             lambdaEndpoint = Endpoint("Lambda service endpoint")
             ec2Endpoint = Endpoint("EC2 service endpoint")
