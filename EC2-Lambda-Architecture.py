@@ -25,6 +25,7 @@ with Diagram("EC2-Lambda", show=False, direction="LR"):
             lambdaEndpoint = Endpoint("Lambda service endpoint")
             ec2Endpoint = Endpoint("EC2 service endpoint")
             cloudwatchEndpoint = Endpoint("Cloudwatch service endpoint")
+            ssmEndpoint = Endpoint("System Manager service endpoint")
 
             ami = EC2Ami("Preloaded AMI")
             
@@ -33,7 +34,7 @@ with Diagram("EC2-Lambda", show=False, direction="LR"):
             s3Endpoint << Edge(label="Save Output") << ami            
             ami << ec2Endpoint<< triggerLambda
             ami >> lambdaEndpoint >> shutdownLambda
-
+            ami >> ssmEndpoint
             lambdas >> cloudwatchEndpoint >> cloudWatch
             ami >> cloudwatchEndpoint >> cloudWatch
 
